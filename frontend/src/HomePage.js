@@ -23,24 +23,25 @@ const HomePage = () => {
 	const { assignmentData, setAssignmentData, calanderData, setCalanderData } =
 		GContext;
 
-	useEffect(() => {
-		setAssignmentData(assignmentDataJson);
-		setCalanderData(_.countBy(assignmentDataJson, "item_date"));
-	}, []);
-
 	console.log(assignmentDataJson);
-
-	console.log(_.groupBy(assignmentDataJson, "item_date"));
-
-	const dataArray = _.chain(assignmentDataJson)
-		.groupBy("item_date")
-		.map((value, key) => [{ day: key }, { value: value }])
-		.value();
-
-	console.log(assignmentDataJson);
-	console.log(dataArray);
 
 	console.log(_.countBy(assignmentDataJson, "item_date"));
+
+	// calendar array
+
+	const calanderDataArray = _.chain(assignmentDataJson)
+		.countBy("item_date")
+		.map((value, key) => ({ day: key, value: value }))
+		.value();
+
+	console.log(calanderDataArray);
+
+	// calendar array ------------------
+
+	useEffect(() => {
+		setAssignmentData(assignmentDataJson);
+		setCalanderData(calanderDataArray);
+	}, []);
 
 	return (
 		<>

@@ -5,8 +5,24 @@ export const GlobalContext = createContext();
 const GlobalState = ({ children }) => {
 	const [assignmentData, setAssignmentData] = useState([]);
 	const [calanderData, setCalanderData] = useState([]);
-
-	console.log(assignmentData);
+	const [selectedCalanderDate, setSelectedCalanderDate] = useState({
+		day: "",
+		value: 0,
+	});
+	const [selectedDayPieChart, setSelectedDayPieChart] = useState([
+		{
+			id: "Dinner",
+			label: "Dinner",
+			value: 50,
+			color: "hsl(286, 70%, 50%)",
+		},
+		{
+			id: "Lunch",
+			label: "Lunch",
+			value: 50,
+			color: "hsl(55, 70%, 50%)",
+		},
+	]);
 
 	return (
 		<GlobalContext.Provider
@@ -15,6 +31,10 @@ const GlobalState = ({ children }) => {
 				setAssignmentData,
 				calanderData,
 				setCalanderData,
+				selectedCalanderDate,
+				setSelectedCalanderDate,
+				selectedDayPieChart,
+				setSelectedDayPieChart,
 			}}
 		>
 			{children}

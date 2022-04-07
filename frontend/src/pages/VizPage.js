@@ -9,7 +9,12 @@ import { GlobalContext } from "../context/GlobalState";
 
 const VizPage = () => {
 	const GContext = useContext(GlobalContext);
-	const { assignmentData, calanderData } = GContext;
+	const {
+		assignmentData,
+		calanderData,
+		selectedCalanderDate,
+		setSelectedCalanderDate,
+	} = GContext;
 
 	return (
 		<div className="viz-container">
@@ -26,11 +31,11 @@ const VizPage = () => {
 				<div className="din-vs-lun--card">
 					<div className="din-vs-lun--card--info">
 						<span>Selected Date :</span>
-						<p>THU, 7th APR 2022</p>
+						<p>{selectedCalanderDate.day}</p>
 					</div>
 					<div className="din-vs-lun--card--info">
 						<span>Total Orders :</span>
-						<p> 200</p>
+						<p> {selectedCalanderDate.value}</p>
 					</div>
 				</div>
 
