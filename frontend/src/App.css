@@ -1,0 +1,32 @@
+*,::before,::after{
+ padding: 0; 
+ margin: 0;
+ box-sizing: border-box;
+}
+
+body{
+  background-color: rgb(182, 182, 182);
+ 
+  color: black;
+display: block;
+}
+
+.sub-body{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.main-container{
+  
+  background-color: white; 
+    display: flex;
+    flex-direction: column;
+    max-width: 1100px;
+  padding-left:3vw ;
+  padding-right:3vw ;
+ box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
+ flex: 1;
+}

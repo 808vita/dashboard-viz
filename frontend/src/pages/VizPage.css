@@ -1,0 +1,286 @@
+/* viz container */
+
+.viz-container{
+    display: flex; 
+    flex-direction: column;
+    max-width: 1100px;
+    justify-content: center;
+
+}
+/* viz container ----------------*/
+
+
+/* header */
+header{
+    display: flex;
+    width: 90vw;
+    justify-content: center;
+    align-items: center;
+ 
+}
+
+/* header ------------*/
+
+/* 
+top page .calendar-box */
+
+.calendar-box{
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.19);
+    padding: 3vw 4vw 3vw 4vw;
+    transform: scale(1);
+    transition: all 1.2s ease-in-out;
+
+    margin-bottom: 2vw;
+}
+
+/* 
+top page .calendar-box --------------*/
+
+
+
+
+/* calander */
+
+.calendar-container{
+    height: 35vw;
+}
+/* calander----------------- */
+
+
+
+
+/* din-vs-lun-main dinner vs lunch */
+.din-vs-lun-main{
+    display: grid;
+    align-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    margin-bottom: 2vw;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.19);
+    padding: 2vw 4vw 3vw 2vw;
+    transform: scale(1);
+    transition: all 1.25s ease-in-out;
+    /* grid-template-columns: 0.75fr 1fr;    */
+    cursor:crosshair;
+    
+}
+
+
+
+
+.din-vs-lun--card{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: all 1.45s ease-in;
+   
+
+}
+
+.din-vs-lun--card--info{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 1vw 1.5vw 1vw 1.5vw;
+    flex-wrap: wrap;
+    font-size: 1.9vw;
+
+    transition: all 1.35s ease-in-out;
+    
+}
+
+.din-vs-lun--card--info span{
+    font-weight: 600;
+    transition: all 1.6s ease-in;
+}
+
+.din-vs-lun--card--info p{
+    font-weight: 600;
+    font-size:1.85vw;
+    background-color:black;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.19);
+    padding: 2vw 1.5vw 2vw 1.5vw;
+    border-radius:  2%;
+    color: white;
+
+    
+    margin: 0 1vw 0 1vw;
+    width: 20vw;
+    text-align: center;
+
+    transition: all 0.5s ease-in;
+  
+    
+
+   
+}
+
+
+.pie-box{
+    display: inline-block;
+    height:25vw ;
+    transition: all 2s ease-in-out;
+
+}
+
+.pie-box .pie-container>:first-child{
+    width: 100% !important; 
+
+}
+
+
+
+
+
+
+.din-vs-lun-main:hover{
+    box-shadow: 10px 10px 5px lightblue;
+    transform: scale(1.02);
+    background-color: rgba(240, 240, 240,0.6); 
+    
+}
+.din-vs-lun-main:hover .din-vs-lun--card--info {
+    animation: fader 1.75s ease-in ;
+}
+
+.din-vs-lun-main:hover .din-vs-lun--card--info p{
+    
+    animation: expander 6s ease-in infinite;
+  
+    box-shadow: 10px 10px 5px lightblue;
+    
+    background-color: rgb(38, 136, 139);
+    margin:2vw ;
+
+    font-size: 2.15vw;
+    width: 25vw;
+
+}
+
+
+.din-vs-lun-main:hover .din-vs-lun--card--info span{
+    font-size: 2vw;
+    font-weight: 700;
+}
+
+
+.din-vs-lun-main:hover .pie-box{
+    
+    transform: scale(1.4);
+
+}
+
+
+
+
+/* din-vs-lun-main dinner vs lunch ---------------------------*/
+
+
+/* card - pies */
+
+
+.cards{
+display: block;
+   
+}
+
+
+.pie-container{
+    
+    height:25vw ;
+
+}
+
+
+
+.pie-container>:first-child{
+    width: 35% !important; 
+
+}
+
+/* card - pies ------------*/
+
+
+
+
+
+.schedule-graph-main{
+   
+    padding: 1vw 2vw 1vw 2.5vw;
+    
+
+   
+    font-size: 1vw;
+
+    
+
+    margin-bottom: 2vw;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.19);
+   
+    
+    transition: all 1.35s ease-in-out;
+
+}
+
+
+.schedule-graph-main:hover{
+    box-shadow: 10px 10px 5px lightblue;
+    transform: scale(1.02);
+    background-color: rgba(240, 240, 240,0.6); 
+}
+
+/* bar graph */
+
+.bar-graph-container{
+    height: 35vw;
+}
+
+.blocked{
+    display: block;
+    
+}
+
+/* bar graph ------------------*/
+
+
+
+
+
+/* animation */
+
+@keyframes expander {
+    50% { opacity: 0.9; }
+    20% {transform: scale(.8)};
+ 
+   
+  }
+
+  @keyframes expander2 {
+    50% { opacity: 0.9; }
+    80% {transform: scale(.8)};
+    
+ 
+   
+  }
+
+
+  @keyframes fader {
+    0% { opacity: 0; }
+    50%{opacity: 0.5;}
+    100% {opacity: 1};
+    
+ 
+   
+  }
+
+  /* animation ------------------ */
+
+
+
+  
+@media only screen and (max-width: 600px) {
+
+    .calendar-container{
+        height: 75vw;
+    }
+  
+}
