@@ -1,11 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
+import HomePage from "./HomePage";
+
+import GlobalState from "./context/GlobalState";
 
 ReactDOM.render(
 	<React.StrictMode>
-		<App />
+		<GlobalState>
+			<HomePage />
+		</GlobalState>
 	</React.StrictMode>,
 	document.getElementById("root")
 );

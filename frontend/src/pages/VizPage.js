@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import MyResponsiveBar from "../components/barGraph/MyResponsiveBar";
 import MyResponsiveCalendar from "../components/calendar/MyResponsiveCalendar";
 import MyResponsivePie from "../components/cardPies/MyResponsivePie";
 
 import "./VizPage.css";
 
+import { GlobalContext } from "../context/GlobalState";
+
 const VizPage = () => {
+	const GContext = useContext(GlobalContext);
+	const { assignmentData, calanderData } = GContext;
+
 	return (
 		<div className="viz-container">
 			<header>
@@ -13,7 +18,7 @@ const VizPage = () => {
 			</header>
 			<div className="calendar-box">
 				<div className="calendar-container">
-					<MyResponsiveCalendar />
+					<MyResponsiveCalendar calanderData={calanderData} />
 				</div>
 			</div>
 
