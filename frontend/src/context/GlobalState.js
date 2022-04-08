@@ -9,6 +9,7 @@ const GlobalState = ({ children }) => {
 		day: "",
 		value: 0,
 	});
+	const [selectedScheduleData, setSelectedScheduleData] = useState("");
 
 	const [selectedDateBarGraphData, setSelectedDateBarGraphData] = useState([
 		{
@@ -21,6 +22,25 @@ const GlobalState = ({ children }) => {
 		},
 		{
 			date: "2016-09-06",
+
+			Dinner: 197,
+			DinnerColor: "hsl(349, 70%, 50%)",
+			Lunch: 0,
+			LunchColor: "hsl(98, 70%, 50%)",
+		},
+	]);
+
+	const [selectedTimeBarGraphData, setSelectedTimeBarGraphData] = useState([
+		{
+			time: "09-12",
+
+			Dinner: 23,
+			DinnerColor: "hsl(40, 70%, 50%)",
+			Lunch: 173,
+			LunchColor: "hsl(26, 70%, 50%)",
+		},
+		{
+			time: "15-18",
 
 			Dinner: 197,
 			DinnerColor: "hsl(349, 70%, 50%)",
@@ -61,6 +81,10 @@ const GlobalState = ({ children }) => {
 				setSelectedDateData,
 				selectedDateBarGraphData,
 				setSelectedDateBarGraphData,
+				selectedTimeBarGraphData,
+				setSelectedTimeBarGraphData,
+				selectedScheduleData,
+				setSelectedScheduleData,
 			}}
 		>
 			{children}

@@ -7,8 +7,10 @@ import dayjs from "dayjs";
 import "./VizPage.css";
 
 import { GlobalContext } from "../context/GlobalState";
+import MyResponsiveTimeBar from "../components/barGraph/MyResponsiveTimeBar";
 
 const VizPage = () => {
+	// global context -------------
 	const GContext = useContext(GlobalContext);
 	const {
 		assignmentData,
@@ -21,8 +23,14 @@ const VizPage = () => {
 		setSelectedDateData,
 		selectedDateBarGraphData,
 		setSelectedDateBarGraphData,
+		selectedTimeBarGraphData,
+		setSelectedTimeBarGraphData,
+		selectedScheduleData,
+		setSelectedScheduleData,
 	} = GContext;
+	// global context -------------
 
+	// setDateNPie ------------- sets required values
 	const setDateNPie = (date) => {
 		const currentDate = date.day;
 
@@ -81,11 +89,6 @@ const VizPage = () => {
 		const formattedDayDataArray = _.chain(newFormattedDayData)
 			.groupBy("date")
 
-			// .map((value, key) => ({
-			// 	date: key,
-			// 	value: _.countBy(value, "newSlot"),
-			// }))
-
 			.map((value, key) => ({
 				date: key,
 				value: _.countBy(value, "newSlot"),
@@ -112,15 +115,82 @@ const VizPage = () => {
 
 		// formatted date data----------------
 		setSelectedCalanderDate(date);
+		//set selected calander date only
 		setSelectedDateData(newSelectedDateData);
+		//set selected date data
 		setSelectedDayPieChart(newSelectedDayPieChart);
+		//set pie chart data
 		setSelectedDateBarGraphData(newSelectedDateBarGraphData);
+		//set date bar  graph data
 	};
+
+	// setDateNPie ------------- sets required values----------------
 
 	// console.log(_.groupBy(assignmentData, "item_date"));
 
 	// console.log(selectedDayPieChart);
 	// console.log(selectedDayPieChart.map((item) => ({ ...item, value: 5 })));
+
+	let timeNamingArray = [
+		{ timeRange: ["00", "01", "02"], timeRangeName: "12am-03am" },
+		{ timeRange: ["03", "04", "05"], timeRangeName: "03am-06am" },
+		{ timeRange: ["06", "07", "08"], timeRangeName: "06am-09am" },
+		{ timeRange: ["09", "10", "11"], timeRangeName: "09am-12am" },
+		{ timeRange: ["12", "13", "14"], timeRangeName: "12pm-03pm" },
+		{ timeRange: ["15", "16", "17"], timeRangeName: "03pm-06pm" },
+		{ timeRange: ["18", "19", "20"], timeRangeName: "06pm-09pm" },
+		{ timeRange: ["21", "22", "23"], timeRangeName: "09pm-12am" },
+	];
+
+	const setTimeBarData = (data) => {
+		const timeDataArray = data.data.array;
+
+		console.log(timeDataArray);
+
+		const newSelectedScheduleData = data.data.date;
+		console.log(newSelectedScheduleData);
+
+		const newSelectedDateBasedTimeData = timeDataArray.map((item) => {
+			const timeNameObjects = timeNamingArray.map((time) => {
+				if (time.timeRange.includes(item.hour) === true) {
+					return { ...item, rangeName: time.timeRangeName };
+				} else {
+					return;
+				}
+			});
+			// return timeNameObjects.filter((oof) => oof !== undefined);
+			return _.compact(timeNameObjects);
+		});
+
+		const flattenedData = _.flatten(newSelectedDateBasedTimeData);
+
+		const formattedTimeDataArray = _.chain(flattenedData)
+			.groupBy("rangeName")
+
+			.map((value, key) => ({
+				time: key,
+				value: _.countBy(value, "newSlot"),
+				DinnerColor: "hsl(40, 70%, 50%)",
+				LunchColor: "hsl(26, 70%, 50%)",
+				array: value,
+			}))
+
+			.value();
+		console.log(formattedTimeDataArray);
+		console.log(
+			_.merge(
+				formattedTimeDataArray.map((item) => item),
+				formattedTimeDataArray.map((item) => item.value)
+			)
+		);
+
+		const newSelectedTimeBarGraphData = _.merge(
+			formattedTimeDataArray.map((item) => item),
+			formattedTimeDataArray.map((item) => item.value)
+		);
+
+		setSelectedTimeBarGraphData(newSelectedTimeBarGraphData);
+	};
 
 	return (
 		<div className="viz-container">
@@ -159,13 +229,16 @@ const VizPage = () => {
 
 			<div className="schedule-graph-main">
 				<div className="bar-graph-container">
-					<MyResponsiveBar data={selectedDateBarGraphData} />
+					<MyResponsiveBar
+						data={selectedDateBarGraphData}
+						setTimeBarData={setTimeBarData}
+					/>
 				</div>
 			</div>
 
 			<div className="schedule-graph-main time-frame">
 				<div className="bar-graph-container">
-					<MyResponsiveBar data={selectedDateBarGraphData} />
+					<MyResponsiveTimeBar data={selectedTimeBarGraphData} />
 				</div>
 			</div>
 		</div>
