@@ -27,6 +27,10 @@ const VizPage = () => {
 		setSelectedTimeBarGraphData,
 		selectedScheduleData,
 		setSelectedScheduleData,
+		showPieNDateBar,
+		setShowPieNDateBar,
+		showTimeBar,
+		setShowTimeBar,
 	} = GContext;
 	// global context -------------
 
@@ -122,6 +126,9 @@ const VizPage = () => {
 		//set pie chart data
 		setSelectedDateBarGraphData(newSelectedDateBarGraphData);
 		//set date bar  graph data
+
+		setShowPieNDateBar(true);
+		setShowTimeBar(false);
 	};
 
 	// setDateNPie ------------- sets required values----------------
@@ -190,6 +197,7 @@ const VizPage = () => {
 		);
 
 		setSelectedTimeBarGraphData(newSelectedTimeBarGraphData);
+		setShowTimeBar(true);
 	};
 
 	return (
@@ -203,44 +211,68 @@ const VizPage = () => {
 				</div>
 			</div>
 
-			<div className="din-vs-lun-main">
-				<div className="din-vs-lun--card">
+			{!showPieNDateBar ? (
+				<div className="din-vs-lun-main">
 					<div className="din-vs-lun--card--info">
-						<span>Selected Date :</span>
-						<p>{dayjs(selectedCalanderDate.day).format("MMM D, YYYY")}</p>
-					</div>
-					<div className="din-vs-lun--card--info">
-						<span>Total Orders :</span>
-						<p> {selectedCalanderDate.value}</p>
+						<p>Select a valid date to visualize!</p>
 					</div>
 				</div>
+			) : (
+				<div className="din-vs-lun-main">
+					<div className="din-vs-lun--card">
+						<div className="din-vs-lun--card--info">
+							<span>Selected Date :</span>
+							<p>{dayjs(selectedCalanderDate.day).format("MMM D, YYYY")}</p>
+						</div>
+						<div className="din-vs-lun--card--info">
+							<span>Total Orders :</span>
+							<p> {selectedCalanderDate.value}</p>
+						</div>
+					</div>
 
-				<div className="pie-box">
-					<div className="pie-container">
-						<MyResponsivePie data={selectedDayPieChart} />
+					<div className="pie-box">
+						<div className="pie-container">
+							<MyResponsivePie data={selectedDayPieChart} />
+						</div>
 					</div>
 				</div>
-			</div>
+			)}
 
 			{/* <div className="cards">
 				<div className="pie-container">
 					<MyResponsivePie />
 				</div> */}
 
-			<div className="schedule-graph-main">
-				<div className="bar-graph-container">
-					<MyResponsiveBar
-						data={selectedDateBarGraphData}
-						setTimeBarData={setTimeBarData}
-					/>
+			{!showPieNDateBar ? (
+				<div className="din-vs-lun-main">
+					<div className="din-vs-lun--card--info">
+						<p>Select a valid date to visualize!</p>
+					</div>
 				</div>
-			</div>
+			) : (
+				<div className="schedule-graph-main">
+					<div className="bar-graph-container">
+						<MyResponsiveBar
+							data={selectedDateBarGraphData}
+							setTimeBarData={setTimeBarData}
+						/>
+					</div>
+				</div>
+			)}
 
-			<div className="schedule-graph-main time-frame">
-				<div className="bar-graph-container">
-					<MyResponsiveTimeBar data={selectedTimeBarGraphData} />
+			{!showTimeBar ? (
+				<div className="din-vs-lun-main">
+					<div className="din-vs-lun--card--info">
+						<p>Select a bar graph to visualize!</p>
+					</div>
 				</div>
-			</div>
+			) : (
+				<div className="schedule-graph-main time-frame">
+					<div className="bar-graph-container">
+						<MyResponsiveTimeBar data={selectedTimeBarGraphData} />
+					</div>
+				</div>
+			)}
 		</div>
 	);
 };

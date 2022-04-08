@@ -5,6 +5,8 @@ export const GlobalContext = createContext();
 const GlobalState = ({ children }) => {
 	const [assignmentData, setAssignmentData] = useState([]);
 	const [calanderData, setCalanderData] = useState([]);
+	const [showPieNDateBar, setShowPieNDateBar] = useState(false);
+	const [showTimeBar, setShowTimeBar] = useState(false);
 	const [selectedCalanderDate, setSelectedCalanderDate] = useState({
 		day: "",
 		value: 0,
@@ -85,6 +87,10 @@ const GlobalState = ({ children }) => {
 				setSelectedTimeBarGraphData,
 				selectedScheduleData,
 				setSelectedScheduleData,
+				showPieNDateBar,
+				setShowPieNDateBar,
+				showTimeBar,
+				setShowTimeBar,
 			}}
 		>
 			{children}
