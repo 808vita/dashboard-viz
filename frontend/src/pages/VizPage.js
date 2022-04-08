@@ -142,7 +142,7 @@ const VizPage = () => {
 		{ timeRange: ["00", "01", "02"], timeRangeName: "12am-03am" },
 		{ timeRange: ["03", "04", "05"], timeRangeName: "03am-06am" },
 		{ timeRange: ["06", "07", "08"], timeRangeName: "06am-09am" },
-		{ timeRange: ["09", "10", "11"], timeRangeName: "09am-12am" },
+		{ timeRange: ["09", "10", "11"], timeRangeName: "09am-12pm" },
 		{ timeRange: ["12", "13", "14"], timeRangeName: "12pm-03pm" },
 		{ timeRange: ["15", "16", "17"], timeRangeName: "03pm-06pm" },
 		{ timeRange: ["18", "19", "20"], timeRangeName: "06pm-09pm" },
