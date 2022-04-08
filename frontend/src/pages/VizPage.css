@@ -26,7 +26,7 @@ top page .calendar-box */
 
 .calendar-box{
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.19);
-    padding: 3vw 4vw 3vw 4vw;
+    padding: 1vw 1.5vw 1vw 1.5vw;
     transform: scale(1);
     transition: all 1.2s ease-in-out;
 

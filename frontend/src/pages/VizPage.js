@@ -19,6 +19,8 @@ const VizPage = () => {
 		setSelectedDayPieChart,
 		selectedDateData,
 		setSelectedDateData,
+		selectedDateBarGraphData,
+		setSelectedDateBarGraphData,
 	} = GContext;
 
 	const setDateNPie = (date) => {
@@ -53,26 +55,66 @@ const VizPage = () => {
 
 		// creating new formatted date data
 		const newFormattedDayData = newSelectedDateData.map((item) => {
-			return {
-				...item,
-				date: dayjs(item.schedule_time).format("DD MMM"),
-			};
+			if (item.slot === "D") {
+				return {
+					...item,
+					date: dayjs(item.schedule_time).format("DD MMM"),
+					hour: dayjs(item.schedule_time).format("HH"),
+					newSlot: "Dinner",
+				};
+			} else {
+				return {
+					...item,
+					date: dayjs(item.schedule_time).format("DD MMM"),
+					hour: dayjs(item.schedule_time).format("HH"),
+					newSlot: "Lunch",
+				};
+			}
 		});
 
 		console.log(newFormattedDayData);
 		console.log(_.groupBy(newFormattedDayData, "date"));
 
+		const countedByNewSlot = _.countBy(newFormattedDayData, "newSlot");
+		console.log(countedByNewSlot);
+
 		const formattedDayDataArray = _.chain(newFormattedDayData)
 			.groupBy("date")
-			.map((value, key) => ({ date: key, value: value }))
+
+			// .map((value, key) => ({
+			// 	date: key,
+			// 	value: _.countBy(value, "newSlot"),
+			// }))
+
+			.map((value, key) => ({
+				date: key,
+				value: _.countBy(value, "newSlot"),
+				DinnerColor: "hsl(40, 70%, 50%)",
+				LunchColor: "hsl(26, 70%, 50%)",
+				array: value,
+			}))
+
 			.value();
 		console.log(formattedDayDataArray);
+		console.log(
+			_.merge(
+				formattedDayDataArray.map((item) => item),
+				formattedDayDataArray.map((item) => item.value)
+			)
+		);
+
+		const newSelectedDateBarGraphData = _.merge(
+			formattedDayDataArray.map((item) => item),
+			formattedDayDataArray.map((item) => item.value)
+		);
+
+		console.log(selectedDateBarGraphData);
 
 		// formatted date data----------------
-
-		setSelectedDayPieChart(newSelectedDayPieChart);
 		setSelectedCalanderDate(date);
 		setSelectedDateData(newSelectedDateData);
+		setSelectedDayPieChart(newSelectedDayPieChart);
+		setSelectedDateBarGraphData(newSelectedDateBarGraphData);
 	};
 
 	// console.log(_.groupBy(assignmentData, "item_date"));
@@ -117,13 +159,13 @@ const VizPage = () => {
 
 			<div className="schedule-graph-main">
 				<div className="bar-graph-container">
-					<MyResponsiveBar />
+					<MyResponsiveBar data={selectedDateBarGraphData} />
 				</div>
 			</div>
 
 			<div className="schedule-graph-main time-frame">
 				<div className="bar-graph-container">
-					<MyResponsiveBar />
+					<MyResponsiveBar data={selectedDateBarGraphData} />
 				</div>
 			</div>
 		</div>

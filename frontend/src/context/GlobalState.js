@@ -9,6 +9,26 @@ const GlobalState = ({ children }) => {
 		day: "",
 		value: 0,
 	});
+
+	const [selectedDateBarGraphData, setSelectedDateBarGraphData] = useState([
+		{
+			date: "20 Jan",
+
+			Dinner: 23,
+			DinnerColor: "hsl(40, 70%, 50%)",
+			Lunch: 173,
+			LunchColor: "hsl(26, 70%, 50%)",
+		},
+		{
+			date: "2016-09-06",
+
+			Dinner: 197,
+			DinnerColor: "hsl(349, 70%, 50%)",
+			Lunch: 0,
+			LunchColor: "hsl(98, 70%, 50%)",
+		},
+	]);
+
 	const [selectedDayPieChart, setSelectedDayPieChart] = useState([
 		{
 			id: "Dinner",
@@ -39,6 +59,8 @@ const GlobalState = ({ children }) => {
 				setSelectedDayPieChart,
 				selectedDateData,
 				setSelectedDateData,
+				selectedDateBarGraphData,
+				setSelectedDateBarGraphData,
 			}}
 		>
 			{children}

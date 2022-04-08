@@ -1,6 +1,6 @@
 export const barGraphSampleData = [
 	{
-		Date: "20 Jan",
+		date: "20 Jan",
 
 		Dinner: 23,
 		DinnerColor: "hsl(40, 70%, 50%)",
@@ -8,7 +8,7 @@ export const barGraphSampleData = [
 		LunchColor: "hsl(26, 70%, 50%)",
 	},
 	{
-		Date: "2016-09-06",
+		date: "2016-09-06",
 
 		Dinner: 197,
 		DinnerColor: "hsl(349, 70%, 50%)",
@@ -16,7 +16,7 @@ export const barGraphSampleData = [
 		LunchColor: "hsl(98, 70%, 50%)",
 	},
 	{
-		Date: "2015-04-30",
+		date: "2015-04-30",
 
 		Dinner: 36,
 		DinnerColor: "hsl(65, 70%, 50%)",
@@ -24,7 +24,7 @@ export const barGraphSampleData = [
 		LunchColor: "hsl(148, 70%, 50%)",
 	},
 	{
-		Date: "2017-06-06",
+		date: "2017-06-06",
 
 		Dinner: 129,
 		DinnerColor: "hsl(150, 70%, 50%)",
@@ -32,7 +32,7 @@ export const barGraphSampleData = [
 		LunchColor: "hsl(56, 70%, 50%)",
 	},
 	{
-		Date: "2018-04-20",
+		date: "2018-04-20",
 
 		Dinner: 197,
 		DinnerColor: "hsl(224, 70%, 50%)",
@@ -40,7 +40,7 @@ export const barGraphSampleData = [
 		LunchColor: "hsl(336, 70%, 50%)",
 	},
 	{
-		Date: "2016-08-18",
+		date: "2016-08-18",
 
 		Dinner: 27,
 		DinnerColor: "hsl(333, 70%, 50%)",
@@ -48,7 +48,7 @@ export const barGraphSampleData = [
 		LunchColor: "hsl(44, 70%, 50%)",
 	},
 	{
-		Date: "2016-11-20",
+		date: "2016-11-20",
 
 		Dinner: 71,
 		DinnerColor: "hsl(64, 70%, 50%)",
