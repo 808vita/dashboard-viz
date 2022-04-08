@@ -23,9 +23,9 @@ const HomePage = () => {
 	const { assignmentData, setAssignmentData, calanderData, setCalanderData } =
 		GContext;
 
-	console.log(assignmentDataJson);
+	// console.log(assignmentDataJson);
 
-	console.log(_.countBy(assignmentDataJson, "item_date"));
+	// console.log(_.countBy(assignmentDataJson, "item_date"));
 
 	// calendar array
 
@@ -34,7 +34,7 @@ const HomePage = () => {
 		.map((value, key) => ({ day: key, value: value }))
 		.value();
 
-	console.log(calanderDataArray);
+	// console.log(calanderDataArray);
 
 	// calendar array ------------------
 

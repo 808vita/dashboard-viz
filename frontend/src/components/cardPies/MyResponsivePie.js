@@ -1,9 +1,9 @@
 // install (please make sure versions match peerDependencies)
 // yarn add @nivo/core @nivo/pie
 
-import React, { useContext } from "react";
+import React from "react";
 import { ResponsivePie } from "@nivo/pie";
-import { GlobalContext } from "../../context/GlobalState";
+
 // make sure parent container have a defined height when using
 // responsive component, otherwise height will be 0 and
 // no chart will be rendered.
@@ -11,20 +11,14 @@ import { GlobalContext } from "../../context/GlobalState";
 // you'll often use just a few of them.
 
 // { data /* see data tab */ }
-import { pieDataSample } from "./pieDataSample";
-const data = pieDataSample;
+// import { pieDataSample } from "./pieDataSample";
 
-const MyResponsivePie = () => {
-	const GContext = useContext(GlobalContext);
-	const { selectedCalanderDate, selectedDayPieChart, setSelectedDayPieChart } =
-		GContext;
+// const data = pieDataSample;
 
-	console.log(selectedDayPieChart);
-	console.log(selectedDayPieChart.map((item) => ({ ...item, value: 5 })));
-
+const MyResponsivePie = ({ data }) => {
 	return (
 		<ResponsivePie
-			data={selectedDayPieChart}
+			data={data}
 			margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
 			innerRadius={0.5}
 			padAngle={0.7}

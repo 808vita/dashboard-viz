@@ -24,6 +24,8 @@ const GlobalState = ({ children }) => {
 		},
 	]);
 
+	const [selectedDateData, setSelectedDateData] = useState([]);
+
 	return (
 		<GlobalContext.Provider
 			value={{
@@ -35,6 +37,8 @@ const GlobalState = ({ children }) => {
 				setSelectedCalanderDate,
 				selectedDayPieChart,
 				setSelectedDayPieChart,
+				selectedDateData,
+				setSelectedDateData,
 			}}
 		>
 			{children}
