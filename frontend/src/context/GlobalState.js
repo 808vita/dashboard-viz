@@ -68,6 +68,11 @@ const GlobalState = ({ children }) => {
 
 	const [selectedDateData, setSelectedDateData] = useState([]);
 
+	const [bonusSelectedDayRange, setBonusSelectedDayRange] = useState({
+		from: null,
+		to: null,
+	});
+
 	return (
 		<GlobalContext.Provider
 			value={{
@@ -91,6 +96,8 @@ const GlobalState = ({ children }) => {
 				setShowPieNDateBar,
 				showTimeBar,
 				setShowTimeBar,
+				bonusSelectedDayRange,
+				setBonusSelectedDayRange,
 			}}
 		>
 			{children}
