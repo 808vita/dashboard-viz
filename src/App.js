@@ -1,7 +1,6 @@
-import React, { useContext, useEffect } from "react";
+import React from "react";
 
 import "./App.css";
-import { GlobalContext } from "./context/GlobalState";
 
 import VizPage from "./pages/VizPage";
 

@@ -19,14 +19,13 @@ const VizPage = () => {
 		setSelectedCalanderDate,
 		selectedDayPieChart,
 		setSelectedDayPieChart,
-		selectedDateData,
+
 		setSelectedDateData,
 		selectedDateBarGraphData,
 		setSelectedDateBarGraphData,
 		selectedTimeBarGraphData,
 		setSelectedTimeBarGraphData,
-		selectedScheduleData,
-		setSelectedScheduleData,
+
 		showPieNDateBar,
 		setShowPieNDateBar,
 		showTimeBar,

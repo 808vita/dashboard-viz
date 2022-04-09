@@ -20,8 +20,7 @@ import assignmentDataJson from "./assignmentData.json";
 const HomePage = () => {
 	const GContext = useContext(GlobalContext);
 
-	const { assignmentData, setAssignmentData, calanderData, setCalanderData } =
-		GContext;
+	const { setAssignmentData, setCalanderData } = GContext;
 
 	// console.log(assignmentDataJson);
 
