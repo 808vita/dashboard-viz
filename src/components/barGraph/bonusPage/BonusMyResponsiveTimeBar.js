@@ -12,12 +12,12 @@ import { ResponsiveBar } from "@nivo/bar";
 
 // const data = barGraphSampleData;
 
-const BonusMyResponsiveBar = ({ data, setTimeBarData }) => (
+const BonusMyResponsiveTimeBar = ({ data }) => (
 	<ResponsiveBar
 		data={data}
-		onClick={(e) => setTimeBarData(e)}
+		onClick={(e) => console.log(e)}
 		keys={["Dinner", "Lunch"]}
-		indexBy="date"
+		indexBy="time"
 		margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
 		padding={0.3}
 		valueScale={{ type: "linear" }}
@@ -61,7 +61,7 @@ const BonusMyResponsiveBar = ({ data, setTimeBarData }) => (
 			tickSize: 5,
 			tickPadding: 5,
 			tickRotation: 0,
-			legend: "Schedule Date",
+			legend: "Schedule time",
 			legendPosition: "middle",
 			legendOffset: 32,
 		}}
@@ -106,9 +106,9 @@ const BonusMyResponsiveBar = ({ data, setTimeBarData }) => (
 		role="application"
 		ariaLabel="Nivo bar chart demo"
 		barAriaLabel={function (e) {
-			return e.id + ": " + e.formattedValue + " in Date: " + e.indexValue;
+			return e.id + ": " + e.formattedValue + " in Time: " + e.indexValue;
 		}}
 	/>
 );
 
-export default BonusMyResponsiveBar;
+export default BonusMyResponsiveTimeBar;

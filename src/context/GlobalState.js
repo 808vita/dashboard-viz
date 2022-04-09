@@ -68,6 +68,12 @@ const GlobalState = ({ children }) => {
 
 	const [selectedDateData, setSelectedDateData] = useState([]);
 
+	const [showVizPage, setShowVizPage] = useState(true);
+
+	// bonus page realted states ---------------
+	const [showBonusPage, setShowBonusPage] = useState(false);
+
+	// bonus page realted states ---------------//////////////////
 	return (
 		<GlobalContext.Provider
 			value={{
@@ -91,6 +97,10 @@ const GlobalState = ({ children }) => {
 				setShowPieNDateBar,
 				showTimeBar,
 				setShowTimeBar,
+				showVizPage,
+				setShowVizPage,
+				showBonusPage,
+				setShowBonusPage,
 			}}
 		>
 			{children}
