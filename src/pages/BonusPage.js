@@ -4,6 +4,9 @@ import MyResponsivePie from "../components/cardPies/MyResponsivePie";
 import _ from "lodash";
 import dayjs from "dayjs";
 
+import Moment from "moment";
+import { extendMoment } from "moment-range";
+
 import "./BonusPage.css";
 
 import { GlobalContext } from "../context/GlobalState";
@@ -11,6 +14,8 @@ import { GlobalContext } from "../context/GlobalState";
 import BonusMyResponsiveBar from "../components/barGraph/MyResponsiveBar";
 import BonusMyResponsiveTimeBar from "../components/barGraph/bonusPage/BonusMyResponsiveTimeBar";
 import BonusMyResponsiveCalendar from "../components/calendar/bonusPage/BonusMyResponsiveCalendar";
+
+const moment = extendMoment(Moment);
 
 const BonusPage = () => {
 	// global context -------------
@@ -37,6 +42,18 @@ const BonusPage = () => {
 		setSelectedDateOne,
 		selectedDateTwo,
 		setSelectedDateTwo,
+		fromDate,
+		setFromDate,
+		toDate,
+		setToDate,
+		selectedRangePieChart,
+		setSelectedRangePieChart,
+		showBonusPieNBar,
+		setShowBonusPieNBar,
+		selectedRangeTotalOrders,
+		setSelectedRangeTotalOrders,
+		selectedRangeDateCount,
+		setSelectedRangeDateCount,
 	} = GContext;
 	// global context -------------
 
@@ -56,13 +73,113 @@ const BonusPage = () => {
 			});
 		}
 
-		console.log(selectedDateOne);
-		console.log(selectedDateTwo);
-		console.log(
-			dayjs(selectedDateTwo.dateTwo).isBefore(
-				dayjs(selectedDateOne.dateOne, "date")
-			)
+		// console.log(selectedDateOne);
+		// console.log(selectedDateTwo);
+		// console.log(
+		// 	dayjs(selectedDateTwo.dateTwo).isBefore(
+		// 		dayjs(selectedDateOne.dateOne, "date")
+		// 	)
+		// );
+
+		setShowBonusPieNBar(false);
+	};
+
+	const submitHandler = () => {
+		const newFromDate = !dayjs(selectedDateTwo.dateTwo).isBefore(
+			dayjs(selectedDateOne.dateOne, "date")
+		)
+			? dayjs(selectedDateOne.dateOne).format("YYYY-MM-DD")
+			: dayjs(selectedDateTwo.dateTwo).format("YYYY-MM-DD");
+
+		console.log(newFromDate);
+
+		const newToDate = dayjs(selectedDateTwo.dateTwo).isBefore(
+			dayjs(selectedDateOne.dateOne, "date")
+		)
+			? dayjs(selectedDateOne.dateOne).format("YYYY-MM-DD")
+			: dayjs(selectedDateTwo.dateTwo).format("YYYY-MM-DD");
+		console.log(newToDate);
+
+		const start = newFromDate;
+		const end = newToDate;
+
+		let FromToDateArray = [];
+		let currentDate = dayjs(start);
+		let stopDate = dayjs(end);
+		while (currentDate <= stopDate) {
+			FromToDateArray.push(dayjs(currentDate).format("YYYY-MM-DD"));
+			currentDate = dayjs(currentDate).add(1, "days");
+		}
+		console.log(FromToDateArray);
+		console.log(FromToDateArray.length);
+
+		const totalSelectedDates = FromToDateArray.length;
+
+		setSelectedRangeDateCount(totalSelectedDates);
+
+		// const groupedByDate = _.groupBy(assignmentData, "item_date");
+		// console.log(groupedByDate);
+
+		const groupedBySelectedDateRange = _.chain(assignmentData)
+			.groupBy("item_date")
+
+			.map((value, key) => ({
+				date: key,
+				value: _.countBy(value, "slot"),
+				selectedDate: _.compact(
+					FromToDateArray.map((item) => {
+						if (item === key) return item === key;
+					})
+				),
+				array: value,
+			}))
+			.groupBy("selectedDate")
+
+			.value();
+
+		console.log(groupedBySelectedDateRange);
+
+		const SelectedDateRangeDinnerLucnchArray =
+			(_.merge(groupedBySelectedDateRange.true),
+			groupedBySelectedDateRange.true.map((item) => item.value));
+
+		console.log(SelectedDateRangeDinnerLucnchArray);
+
+		const totalOrdersInSelectedRange = _.sumBy(
+			["D", "L"],
+			_.partial(_.sumBy, SelectedDateRangeDinnerLucnchArray)
 		);
+		console.log(totalOrdersInSelectedRange);
+
+		const totalDinnerInSelectedRange = _.sumBy(
+			["D"],
+			_.partial(_.sumBy, SelectedDateRangeDinnerLucnchArray)
+		);
+		console.log(totalDinnerInSelectedRange);
+
+		const totalLunchInSelectedRange = _.sumBy(
+			["L"],
+			_.partial(_.sumBy, SelectedDateRangeDinnerLucnchArray)
+		);
+		console.log(totalLunchInSelectedRange);
+
+		const totalDinnerLunchSelectedRange = [
+			{
+				id: "Dinner",
+				label: "Dinner",
+				value: totalDinnerInSelectedRange,
+				color: "hsl(286, 70%, 50%)",
+			},
+			{
+				id: "Lunch",
+				label: "Lunch",
+				value: totalLunchInSelectedRange,
+				color: "hsl(55, 70%, 50%)",
+			},
+		];
+		setSelectedRangeTotalOrders(totalOrdersInSelectedRange);
+		setSelectedRangePieChart(totalDinnerLunchSelectedRange);
+		setShowBonusPieNBar(true);
 	};
 
 	const resetHandler = () => {
@@ -263,7 +380,7 @@ const BonusPage = () => {
 					</p>
 					<p>from data : pre process and feed dates </p>
 					<p>to date: pre process and feed dates </p>
-					<button onClick={() => console.log("submit")}>submit</button>
+					<button onClick={() => submitHandler()}>submit</button>
 					<button onClick={() => resetHandler()}>reset</button>
 				</div>
 
@@ -291,7 +408,7 @@ const BonusPage = () => {
 				</div>
 			</div>
 
-			{!showPieNDateBar ? (
+			{!showBonusPieNBar ? (
 				<div className="din-vs-lun-main">
 					<div className="din-vs-lun--card--info">
 						<p>Select a valid date to visualize!</p>
@@ -302,17 +419,17 @@ const BonusPage = () => {
 					<div className="din-vs-lun--card">
 						<div className="din-vs-lun--card--info">
 							<span>Count Of Dates :</span>
-							<p>{dayjs(selectedCalanderDate.day).format("MMM D, YYYY")}</p>
+							<p>{selectedRangeDateCount}</p>
 						</div>
 						<div className="din-vs-lun--card--info">
 							<span>Total Orders :</span>
-							<p> {selectedCalanderDate.value}</p>
+							<p> {selectedRangeTotalOrders}</p>
 						</div>
 					</div>
 
 					<div className="pie-box">
 						<div className="pie-container">
-							<MyResponsivePie data={selectedDayPieChart} />
+							<MyResponsivePie data={selectedRangePieChart} />
 						</div>
 					</div>
 				</div>
@@ -323,7 +440,7 @@ const BonusPage = () => {
 					<MyResponsivePie />
 				</div> */}
 
-			{!showPieNDateBar ? (
+			{!showBonusPieNBar ? (
 				<div className="din-vs-lun-main">
 					<div className="din-vs-lun--card--info">
 						<p>Select a valid date to visualize!</p>

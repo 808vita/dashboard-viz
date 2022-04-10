@@ -20,7 +20,8 @@ const BonusMyResponsiveCalendar = ({ data, setTwoDates }) => {
 			from="2021-01-01"
 			to="2022-12-31"
 			emptyColor="#eeeeee"
-			onClick={(e) => setTwoDates(e.data)}
+			onClick={(e) => e.data !== undefined && setTwoDates(e.data)}
+			// onClick={(e) => console.log(e.data === undefined)}
 			colors={["#61cdbb", "#97e3d5", "#e8c1a0", "#f47560"]}
 			margin={{ top: 40, right: 40, bottom: 40, left: 40 }}
 			yearSpacing={40}

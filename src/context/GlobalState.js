@@ -82,6 +82,14 @@ const GlobalState = ({ children }) => {
 		dateTwo: "",
 	});
 
+	const [fromDate, setFromDate] = useState("");
+	const [toDate, setToDate] = useState("");
+
+	const [selectedRangePieChart, setSelectedRangePieChart] = useState([]);
+	const [selectedRangeTotalOrders, setSelectedRangeTotalOrders] = useState(0);
+	const [selectedRangeDateCount, setSelectedRangeDateCount] = useState(0);
+	const [showBonusPieNBar, setShowBonusPieNBar] = useState(false);
+
 	// bonus page realted states ---------------//////////////////
 	return (
 		<GlobalContext.Provider
@@ -107,13 +115,28 @@ const GlobalState = ({ children }) => {
 				showTimeBar,
 				setShowTimeBar,
 				showVizPage,
+
 				setShowVizPage,
+
+				// bonus page items
 				showBonusPage,
 				setShowBonusPage,
 				selectedDateOne,
 				setSelectedDateOne,
 				selectedDateTwo,
 				setSelectedDateTwo,
+				fromDate,
+				setFromDate,
+				toDate,
+				setToDate,
+				selectedRangePieChart,
+				setSelectedRangePieChart,
+				showBonusPieNBar,
+				setShowBonusPieNBar,
+				selectedRangeTotalOrders,
+				setSelectedRangeTotalOrders,
+				selectedRangeDateCount,
+				setSelectedRangeDateCount,
 			}}
 		>
 			{children}
