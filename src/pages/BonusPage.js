@@ -11,9 +11,9 @@ import "./BonusPage.css";
 
 import { GlobalContext } from "../context/GlobalState";
 
-import BonusMyResponsiveBar from "../components/barGraph/MyResponsiveBar";
 import BonusMyResponsiveTimeBar from "../components/barGraph/bonusPage/BonusMyResponsiveTimeBar";
 import BonusMyResponsiveCalendar from "../components/calendar/bonusPage/BonusMyResponsiveCalendar";
+import BonusMyResponsiveBar from "../components/barGraph/bonusPage/BonusMyResponsiveBar";
 
 const moment = extendMoment(Moment);
 
@@ -54,6 +54,8 @@ const BonusPage = () => {
 		setSelectedRangeTotalOrders,
 		selectedRangeDateCount,
 		setSelectedRangeDateCount,
+		selectedRangeBarGraphData,
+		setSelectedRangeBarGraphData,
 	} = GContext;
 	// global context -------------
 
@@ -179,8 +181,8 @@ const BonusPage = () => {
 
 		console.log(starterDataWithRangeNameProcessed);
 
-		console.log(
-			starterDataWithRangeNameProcessed.map((item) => {
+		const finalBonusPageStarterData = starterDataWithRangeNameProcessed.map(
+			(item) => {
 				if (item.schedule_placed === 0) {
 					return { ...item, orderPlaced: "Same Day" };
 				}
@@ -199,10 +201,10 @@ const BonusPage = () => {
 				} else {
 					return console.log({ postiveNumber: item });
 				}
-			})
+			}
 		);
 
-		const groupedBySelectedDateRange = _.chain(processedBonusPageStarterData)
+		const groupedBySelectedDateRange = _.chain(finalBonusPageStarterData)
 			.groupBy("item_date")
 
 			.map((value, key) => ({
@@ -210,20 +212,21 @@ const BonusPage = () => {
 				value: _.countBy(value, "slot"),
 				selectedDate: _.compact(
 					FromToDateArray.map((item) => {
-						if (item === key) return item === key;
+						if (item === key) return "selectedDate";
 					})
 				),
-				array: value,
+				dataSet: value,
+				newOrderPlace: _.groupBy(value, "orderPlaced"),
 			}))
 			.groupBy("selectedDate")
 
 			.value();
 
-		console.log(groupedBySelectedDateRange);
+		console.log(groupedBySelectedDateRange.selectedDate);
 
 		const SelectedDateRangeDinnerLucnchArray =
-			(_.merge(groupedBySelectedDateRange.true),
-			groupedBySelectedDateRange.true.map((item) => item.value));
+			(_.merge(groupedBySelectedDateRange.selectedDate),
+			groupedBySelectedDateRange.selectedDate.map((item) => item.value));
 
 		console.log(SelectedDateRangeDinnerLucnchArray);
 
@@ -259,6 +262,37 @@ const BonusPage = () => {
 				color: "hsl(55, 70%, 50%)",
 			},
 		];
+
+		const mergedStarterForBarGraph = _.flatten(
+			_.merge(
+				[],
+				groupedBySelectedDateRange.selectedDate.map((item) => {
+					return item.dataSet;
+				})
+			)
+		);
+
+		console.log(_.groupBy(mergedStarterForBarGraph, "orderPlaced"));
+
+		const formattedBarGraphData = _.chain(mergedStarterForBarGraph)
+			.groupBy("orderPlaced")
+
+			.map((value, key) => ({
+				date: key,
+				value: _.countBy(value, "newSlot"),
+				DinnerColor: "hsl(40, 70%, 50%)",
+				LunchColor: "hsl(26, 70%, 50%)",
+				array: value,
+			}))
+
+			.value();
+		console.log(formattedBarGraphData);
+
+		const NewBonusBarChartData = _.merge(
+			formattedBarGraphData.map((item) => item),
+			formattedBarGraphData.map((item) => item.value)
+		);
+		setSelectedRangeBarGraphData(NewBonusBarChartData);
 		setSelectedRangeTotalOrders(totalOrdersInSelectedRange);
 		setSelectedRangePieChart(totalDinnerLunchSelectedRange);
 		setShowBonusPieNBar(true);
@@ -531,10 +565,7 @@ const BonusPage = () => {
 			) : (
 				<div className="schedule-graph-main">
 					<div className="bar-graph-container">
-						<BonusMyResponsiveBar
-							data={selectedDateBarGraphData}
-							setTimeBarData={setTimeBarData}
-						/>
+						<BonusMyResponsiveBar data={selectedRangeBarGraphData} />
 					</div>
 				</div>
 			)}

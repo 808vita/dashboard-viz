@@ -12,10 +12,10 @@ import { ResponsiveBar } from "@nivo/bar";
 
 // const data = barGraphSampleData;
 
-const MyResponsiveBar = ({ data, setTimeBarData }) => (
+const BonusMyResponsiveBar = ({ data }) => (
 	<ResponsiveBar
 		data={data}
-		onClick={(e) => setTimeBarData(e)}
+		onClick={(e) => console.log(e)}
 		keys={["Dinner", "Lunch"]}
 		indexBy="date"
 		margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
@@ -111,4 +111,4 @@ const MyResponsiveBar = ({ data, setTimeBarData }) => (
 	/>
 );
 
-export default MyResponsiveBar;
+export default BonusMyResponsiveBar;

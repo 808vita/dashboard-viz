@@ -89,6 +89,9 @@ const GlobalState = ({ children }) => {
 	const [selectedRangeTotalOrders, setSelectedRangeTotalOrders] = useState(0);
 	const [selectedRangeDateCount, setSelectedRangeDateCount] = useState(0);
 	const [showBonusPieNBar, setShowBonusPieNBar] = useState(false);
+	const [selectedRangeBarGraphData, setSelectedRangeBarGraphData] = useState(
+		[]
+	);
 
 	// bonus page realted states ---------------//////////////////
 	return (
@@ -137,6 +140,8 @@ const GlobalState = ({ children }) => {
 				setSelectedRangeTotalOrders,
 				selectedRangeDateCount,
 				setSelectedRangeDateCount,
+				selectedRangeBarGraphData,
+				setSelectedRangeBarGraphData,
 			}}
 		>
 			{children}
