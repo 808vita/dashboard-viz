@@ -120,7 +120,35 @@ const BonusPage = () => {
 		// const groupedByDate = _.groupBy(assignmentData, "item_date");
 		// console.log(groupedByDate);
 
-		const groupedBySelectedDateRange = _.chain(assignmentData)
+		const processedBonusPageStarterData = assignmentData.map((item) => {
+			if (item.slot === "D")
+				return {
+					...item,
+					scheduleDate: dayjs(item.schedule_time).format("DD MMM"),
+					schedule_hour: dayjs(item.schedule_time).format("HH"),
+					schedule_placed: dayjs(item.schedule_time).diff(
+						item.item_date,
+						"day"
+					),
+					newSlot: "Dinner",
+				};
+			else {
+				return {
+					...item,
+					scheduleDate: dayjs(item.schedule_time).format("DD MMM"),
+					schedule_hour: dayjs(item.schedule_time).format("HH"),
+					schedule_placed: dayjs(item.schedule_time).diff(
+						item.item_date,
+						"day"
+					),
+					newSlot: "Lunch",
+				};
+			}
+		});
+
+		console.log(processedBonusPageStarterData);
+
+		const groupedBySelectedDateRange = _.chain(processedBonusPageStarterData)
 			.groupBy("item_date")
 
 			.map((value, key) => ({
