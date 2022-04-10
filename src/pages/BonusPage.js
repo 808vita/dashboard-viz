@@ -148,6 +148,60 @@ const BonusPage = () => {
 
 		console.log(processedBonusPageStarterData);
 
+		let timeNamingArray = [
+			{ timeRange: ["00", "01", "02"], timeRangeName: "12am-03am" },
+			{ timeRange: ["03", "04", "05"], timeRangeName: "03am-06am" },
+			{ timeRange: ["06", "07", "08"], timeRangeName: "06am-09am" },
+			{ timeRange: ["09", "10", "11"], timeRangeName: "09am-12pm" },
+			{ timeRange: ["12", "13", "14"], timeRangeName: "12pm-03pm" },
+			{ timeRange: ["15", "16", "17"], timeRangeName: "03pm-06pm" },
+			{ timeRange: ["18", "19", "20"], timeRangeName: "06pm-09pm" },
+			{ timeRange: ["21", "22", "23"], timeRangeName: "09pm-12am" },
+		];
+
+		const starterDataWithRangeNameRaw = processedBonusPageStarterData.map(
+			(item) => {
+				const timeNameObjects = timeNamingArray.map((time) => {
+					if (time.timeRange.includes(item.schedule_hour) === true) {
+						return { ...item, rangeName: time.timeRangeName };
+					} else {
+						return;
+					}
+				});
+				// return timeNameObjects.filter((oof) => oof !== undefined);
+				return _.compact(timeNameObjects);
+			}
+		);
+
+		const starterDataWithRangeNameProcessed = starterDataWithRangeNameRaw.map(
+			(item) => item[0]
+		);
+
+		console.log(starterDataWithRangeNameProcessed);
+
+		console.log(
+			starterDataWithRangeNameProcessed.map((item) => {
+				if (item.schedule_placed === 0) {
+					return { ...item, orderPlaced: "Same Day" };
+				}
+				if (item.schedule_placed === -1) {
+					return {
+						...item,
+						orderPlaced: Math.abs(item.schedule_placed) + " day prior",
+					};
+				}
+
+				if (item.schedule_placed < -1) {
+					return {
+						...item,
+						orderPlaced: Math.abs(item.schedule_placed) + " days prior",
+					};
+				} else {
+					return console.log({ postiveNumber: item });
+				}
+			})
+		);
+
 		const groupedBySelectedDateRange = _.chain(processedBonusPageStarterData)
 			.groupBy("item_date")
 
