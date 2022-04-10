@@ -1,0 +1,6 @@
+.din-vs-lun--card--info.bonus{
+  display: flex;
+    justify-content: center;
+   flex-wrap: nowrap;
+    flex-direction: column;
+}

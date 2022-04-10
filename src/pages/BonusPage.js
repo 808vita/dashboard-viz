@@ -1,15 +1,16 @@
 import React, { useContext } from "react";
 
-import MyResponsiveCalendar from "../components/calendar/MyResponsiveCalendar";
 import MyResponsivePie from "../components/cardPies/MyResponsivePie";
 import _ from "lodash";
 import dayjs from "dayjs";
-import "./VizPage.css";
+
+import "./BonusPage.css";
 
 import { GlobalContext } from "../context/GlobalState";
 
 import BonusMyResponsiveBar from "../components/barGraph/MyResponsiveBar";
 import BonusMyResponsiveTimeBar from "../components/barGraph/bonusPage/BonusMyResponsiveTimeBar";
+import BonusMyResponsiveCalendar from "../components/calendar/bonusPage/BonusMyResponsiveCalendar";
 
 const BonusPage = () => {
 	// global context -------------
@@ -32,8 +33,48 @@ const BonusPage = () => {
 		setShowPieNDateBar,
 		showTimeBar,
 		setShowTimeBar,
+		selectedDateOne,
+		setSelectedDateOne,
+		selectedDateTwo,
+		setSelectedDateTwo,
 	} = GContext;
 	// global context -------------
+
+	/// setTwoDates preps dates for creating date range between two selected dates
+
+	const setTwoDates = (date) => {
+		if (!selectedDateOne.selected) {
+			setSelectedDateOne({
+				selected: true,
+				dateOne: date.day,
+			});
+		}
+		if (selectedDateOne) {
+			setSelectedDateTwo({
+				selected: true,
+				dateTwo: date.day,
+			});
+		}
+
+		console.log(selectedDateOne);
+		console.log(selectedDateTwo);
+		console.log(
+			dayjs(selectedDateTwo.dateTwo).isBefore(
+				dayjs(selectedDateOne.dateOne, "date")
+			)
+		);
+	};
+
+	const resetHandler = () => {
+		setSelectedDateOne({
+			selected: false,
+			dateOne: "",
+		});
+		setSelectedDateTwo({
+			selected: false,
+			dateOne: "",
+		});
+	};
 
 	// setDateNPie ------------- sets required values
 	const setDateNPie = (date) => {
@@ -208,7 +249,45 @@ const BonusPage = () => {
 			</header>
 			<div className="calendar-box">
 				<div className="calendar-container">
-					<MyResponsiveCalendar data={calanderData} setDateNPie={setDateNPie} />
+					<BonusMyResponsiveCalendar
+						data={calanderData}
+						setTwoDates={setTwoDates}
+					/>
+				</div>
+			</div>
+
+			<div className="din-vs-lun-main">
+				<div className="din-vs-lun--card">
+					<p>
+						dates Selected : {selectedDateOne.dateOne},{selectedDateTwo.dateTwo}
+					</p>
+					<p>from data : pre process and feed dates </p>
+					<p>to date: pre process and feed dates </p>
+					<button onClick={() => console.log("submit")}>submit</button>
+					<button onClick={() => resetHandler()}>reset</button>
+				</div>
+
+				<div className="din-vs-lun--card">
+					<div className="din-vs-lun--card--info bonus">
+						<span>From Date :</span>
+						<p>
+							{!dayjs(selectedDateTwo.dateTwo).isBefore(
+								dayjs(selectedDateOne.dateOne, "date")
+							)
+								? dayjs(selectedDateOne.dateOne).format("MMM D, YYYY")
+								: dayjs(selectedDateTwo.dateTwo).format("MMM D, YYYY")}
+						</p>
+					</div>
+					<div className="din-vs-lun--card--info bonus">
+						<span>To Date :</span>
+						<p>
+							{dayjs(selectedDateTwo.dateTwo).isBefore(
+								dayjs(selectedDateOne.dateOne, "date")
+							)
+								? dayjs(selectedDateOne.dateOne).format("MMM D, YYYY")
+								: dayjs(selectedDateTwo.dateTwo).format("MMM D, YYYY")}
+						</p>
+					</div>
 				</div>
 			</div>
 
@@ -222,7 +301,7 @@ const BonusPage = () => {
 				<div className="din-vs-lun-main">
 					<div className="din-vs-lun--card">
 						<div className="din-vs-lun--card--info">
-							<span>Selected Date :</span>
+							<span>Count Of Dates :</span>
 							<p>{dayjs(selectedCalanderDate.day).format("MMM D, YYYY")}</p>
 						</div>
 						<div className="din-vs-lun--card--info">

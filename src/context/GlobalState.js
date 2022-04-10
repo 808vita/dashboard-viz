@@ -73,6 +73,15 @@ const GlobalState = ({ children }) => {
 	// bonus page realted states ---------------
 	const [showBonusPage, setShowBonusPage] = useState(false);
 
+	const [selectedDateOne, setSelectedDateOne] = useState({
+		selected: false,
+		dateOne: "",
+	});
+	const [selectedDateTwo, setSelectedDateTwo] = useState({
+		selected: false,
+		dateTwo: "",
+	});
+
 	// bonus page realted states ---------------//////////////////
 	return (
 		<GlobalContext.Provider
@@ -101,6 +110,10 @@ const GlobalState = ({ children }) => {
 				setShowVizPage,
 				showBonusPage,
 				setShowBonusPage,
+				selectedDateOne,
+				setSelectedDateOne,
+				selectedDateTwo,
+				setSelectedDateTwo,
 			}}
 		>
 			{children}
